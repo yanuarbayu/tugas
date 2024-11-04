@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhitungan Rata-Rata Nilai</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div class="container">
+        <h1>Menghitung Nilai Rata-Rata </h1>
+
+        <div id="inputFields">
+            <label>Nama Mata Pelajaran:</label>
+            <input type="text" id="namaMataPelajaran" placeholder="Masukkan nama mata pelajaran">
+            
+            <label>Nilai:</label>
+            <input type="number" id="nilai" placeholder="Masukkan nilai" min="0" max="100">
+            
+            <button onclick="tambahMataPelajaran()">Tambah Mata Pelajaran</button>
+        </div>
+
+        <div id="output"></div>
+
+        <button onclick="hitungRataRata()">Hitung Rata-Rata</button>
+        <button onclick="resetForm()">Reset</button>
+    </div>
+
+    <script>
+        // Array untuk menyimpan data mata pelajaran dan nilai
+const mataPelajaran = [];
+
+// Fungsi untuk menambahkan mata pelajaran ke array
+function tambahMataPelajaran() {
+    const namaMataPelajaran = document.getElementById('namaMataPelajaran').value;
+    const nilai = parseFloat(document.getElementById('nilai').value);
+
+    // Validasi input
+    if (namaMataPelajaran && !isNaN(nilai) && nilai >= 0 && nilai <= 100) {
+        // Tambahkan mata pelajaran ke array
+        mataPelajaran.push({ nama: namaMataPelajaran, nilai: nilai });
+
+        // Reset input field
+        document.getElementById('namaMataPelajaran').value = '';
+        document.getElementById('nilai').value = '';
+
+        // Tampilkan data yang telah ditambahkan
+        tampilkanMataPelajaran();
+    } else {
+        alert("Masukkan nama mata pelajaran dan nilai yang valid (0-100).");
+    }
+}
+
+// Fungsi untuk menampilkan daftar mata pelajaran
+function tampilkanMataPelajaran() {
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = "<h3>Daftar Mata Pelajaran:</h3>";
+
+    mataPelajaran.forEach((mp, index) => {
+        outputDiv.innerHTML += `<p>${index + 1}. ${mp.nama}: ${mp.nilai}</p>`;
+    });
+}
+
+// Fungsi untuk menghitung rata-rata nilai
+function hitungRataRata() {
+    let totalNilai = 0;
+    let jumlahMataPelajaran = 0;
+
+    // Perulangan for untuk menghitung total nilai
+    for (let i = 0; i < mataPelajaran.length; i++) {
+        let nilai = mataPelajaran[i].nilai;
+
+        // Cek tipe data nilai
+        if (typeof nilai === 'number') {
+            totalNilai += nilai;  // Tambahkan ke total
+            jumlahMataPelajaran++; // Hitung jumlah mata pelajaran
+        }
+    }
+
+    // Hitung rata-rata
+    let rataRata = jumlahMataPelajaran > 0 ? totalNilai / jumlahMataPelajaran : 0;
+
+    // Tampilkan hasil
+    if (rataRata >= 90) {
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML += `<p>Total Nilai: ${totalNilai} Nilai A</p>
+                            <p>Rata-Rata Nilai3: ${rataRata.toFixed(2)} Nilai A</p>`;
+      }
+      else if (rataRata< 95 && rataRata>= 80) { // true
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML += `<p>Total Nilai: ${totalNilai} Nilai B</p>
+                                <p>Rata-Rata Nilai2: ${rataRata.toFixed(2)} Nilai B</p>`;
+      }
+      else { // true
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML += `<p>Total Nilai: ${totalNilai} Nilai C</p>
+                                <p>Rata-Rata Nilai1: ${rataRata.toFixed(2)} Nilai c</p>`;
+      }
+    }
+
+// Fungsi untuk reset form dan output
+function resetForm() {
+    mataPelajaran.length = 0;  // Kosongkan array
+    document.getElementById('output').innerHTML = '';
+}
+
+    </script>
+</body>
+</html>
